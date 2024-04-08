@@ -1,22 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
-    <Version>3.0.3</Version>
-    <Configurations>Debug;Release;test</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	<DefineConstants>donetcore</DefineConstants>
-    <DocumentationFile>bin\Release\netcoreapp2.0\esdk_obs_.net_core.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	 <DefineConstants>donetcore</DefineConstants>
-    <DocumentationFile>bin\Debug\netcoreapp2.0\esdk_obs_.net_core.xml</DocumentationFile>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <AssemblyName>Baza.Forks.HuaweiCloud.SDK.OBS</AssemblyName>
+    <Version>3.22.3.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,11 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <PackageReference Include="log4net" Version="2.0.17" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
-  </ItemGroup>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)Nupkgs\" />
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(PackageId).$(PackageVersion).symbols.nupkg" DestinationFolder="$(SolutionDir)Nupkgs\" />
+  </Target>
 
 </Project>
